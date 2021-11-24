@@ -7,4 +7,4 @@ database:
   password: root
   charset: utf8mb4
   loc: Asia/Shanghai
-url: "https://w3.eosforce.cn:443/v1/chain/"
+url: "wss://mainnet.infura.io/ws/v3/44542aa175d44232b84dc9f5f24f4b93"

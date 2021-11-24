@@ -2,6 +2,8 @@ package config
 
 import (
 	"fmt"
+	"github.com/ethereum/go-ethereum/ethclient"
+	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -14,7 +16,14 @@ import (
 var (
 	APPVIPER *viper.Viper
 	DB       *gorm.DB
+	CLIENT   *ethclient.Client
 )
+
+func init() {
+	APPVIPER = InitAppConfig()
+	DB = InitDB()
+	CLIENT = InitClient()
+}
 
 func InitAppConfig() *viper.Viper {
 	workDir, _ := os.Getwd()
@@ -27,11 +36,6 @@ func InitAppConfig() *viper.Viper {
 
 	}
 	return appViper
-}
-
-func init() {
-	APPVIPER = InitAppConfig()
-	DB = InitDB()
 }
 
 func InitDB() *gorm.DB {
@@ -53,7 +57,6 @@ func InitDB() *gorm.DB {
 		url.QueryEscape(loc),
 	)
 
-	//db, err := gorm.Open(mysql.Open(sqlStr), &gorm.Config{Logger: logger.Default.LogMode(logger.Info)})
 	db, err := gorm.Open(mysql.Open(sqlStr), &gorm.Config{Logger: logger.Default.LogMode(logger.Warn)})
 	if err != nil {
 		panic("connected error" + err.Error())
@@ -61,4 +64,16 @@ func InitDB() *gorm.DB {
 		fmt.Println("connected db")
 	}
 	return db
+}
+
+func InitClient() *ethclient.Client {
+	url := APPVIPER.GetString("url")
+	client, err := ethclient.Dial(url)
+	if err != nil {
+		log.Error(err)
+	} else {
+		fmt.Println("client success")
+	}
+	return client
+
 }

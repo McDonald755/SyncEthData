@@ -1,0 +1,10 @@
+database:
+  driverName: mysql
+  host: localhost
+  port: "3306"
+  databaseName: test_eosc
+  username: root
+  password: root
+  charset: utf8mb4
+  loc: Asia/Shanghai
+url: "https://w3.eosforce.cn:443/v1/chain/"

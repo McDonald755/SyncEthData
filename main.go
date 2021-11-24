@@ -1,0 +1,5 @@
+package SyncEthData
+
+func main() {
+
+}

@@ -9,11 +9,15 @@ import (
 )
 
 func getBlockInfo(num *big.Int) {
-	block, err := config.CLIENT.BlockByNumber(context.Background(), num)
-	if err != nil {
-		log.Error(err)
-	}
-	fmt.Println(block)
+	//TODO 改成批量获取,看看一个连接多少次请求合适
+	for i, client := range config.CLIENT {
+		block, err := client.BlockByNumber(context.Background(), num)
+		if err != nil {
+			log.Error(err)
+		}
+		fmt.Println(block)
 
-	TransformData(block)
+		TransformData(block)
+	}
+
 }

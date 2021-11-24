@@ -7,4 +7,5 @@ database:
   password: root
   charset: utf8mb4
   loc: Asia/Shanghai
-url: "wss://mainnet.infura.io/ws/v3/44542aa175d44232b84dc9f5f24f4b93"
+infura:
+  url1: "wss://mainnet.infura.io/ws/v3/44542aa175d44232b84dc9f5f24f4b93"

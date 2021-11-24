@@ -16,16 +16,16 @@ import (
 var (
 	APPVIPER *viper.Viper
 	DB       *gorm.DB
-	CLIENT   *ethclient.Client
+	CLIENT   []*ethclient.Client
 )
 
 func init() {
-	APPVIPER = InitAppConfig()
-	DB = InitDB()
-	CLIENT = InitClient()
+	APPVIPER = initAppConfig()
+	DB = initDB()
+	CLIENT = initClient()
 }
 
-func InitAppConfig() *viper.Viper {
+func initAppConfig() *viper.Viper {
 	workDir, _ := os.Getwd()
 	appViper := viper.New()
 	appViper.SetConfigName("application")
@@ -38,7 +38,7 @@ func InitAppConfig() *viper.Viper {
 	return appViper
 }
 
-func InitDB() *gorm.DB {
+func initDB() *gorm.DB {
 	host := APPVIPER.GetString("database.host")
 	port := APPVIPER.GetString("database.port")
 	database := APPVIPER.GetString("database.databaseName")
@@ -66,14 +66,17 @@ func InitDB() *gorm.DB {
 	return db
 }
 
-func InitClient() *ethclient.Client {
-	url := APPVIPER.GetString("url")
-	client, err := ethclient.Dial(url)
-	if err != nil {
-		log.Error(err)
-	} else {
-		fmt.Println("client success")
+func initClient() []*ethclient.Client {
+	var clients []*ethclient.Client
+	for i := 0; i < 100; i++ {
+		url := APPVIPER.GetString("infura.url" + string(i))
+		client, err := ethclient.Dial(url)
+		if err != nil {
+			log.Error(err)
+		} else {
+			fmt.Println("client success")
+		}
+		clients = append(clients, client)
 	}
-	return client
-
+	return clients
 }

@@ -5,16 +5,14 @@ import (
 	"SyncEthData/utils"
 	"context"
 	"fmt"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 	log "github.com/sirupsen/logrus"
 	"math/big"
 )
 
-func getBlockInfo(num *big.Int) {
+func GetBlockInfo() {
 	//TODO 改成批量获取,看看一个连接多少次请求合适
-	for i, client := range config.CLIENT {
+	for _, client := range config.CLIENT {
 		block, err := client.BlockByNumber(context.Background(), num)
 		if err != nil {
 			log.Error(err)
@@ -24,7 +22,7 @@ func getBlockInfo(num *big.Int) {
 
 }
 
-func GetHeadByNum(client *ethclient.Client, num *big.Int) *types.Header{
+func GetHeadByNum(client *ethclient.Client, num *big.Int) *types.Header {
 	header, err := client.HeaderByNumber(context.Background(), num)
 	if err != nil {
 		fmt.Println(err)
@@ -40,7 +38,7 @@ func GetHeadByHash(client *ethclient.Client, h string) {
 	fmt.Printf("%#v \n", hash)
 }
 
-func GetBlockByNum(client *ethclient.Client, num *big.Int) * types.Block{
+func GetBlockByNum(client *ethclient.Client, num *big.Int) *types.Block {
 	block, err := client.BlockByNumber(context.Background(), num)
 	if err != nil {
 		fmt.Println(err)

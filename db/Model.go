@@ -1,6 +1,9 @@
 package db
 
-import "time"
+import (
+	"math/big"
+	"time"
+)
 
 type TRANSACTION struct {
 	ID          int64     `orm:"ID" json:"ID"`
@@ -10,7 +13,7 @@ type TRANSACTION struct {
 	HASH        string    `orm:"HASH" json:"HASH"`
 	SIZE        string    `orm:"SIZE" json:"SIZE"`
 	FROMACCOUNT string    `orm:"FROM_ACCOUNT" json:"FROM_ACCOUNT"`
-	BLOCKNUMBER string    `orm:"BLOCK_NUMBER" json:"BLOCK_NUMBER"`
+	BLOCKNUMBER *big.Int  `orm:"BLOCK_NUMBER" json:"BLOCK_NUMBER"`
 }
 
 func (TRANSACTION) TableName() string {
@@ -21,7 +24,7 @@ type BLOCK struct {
 	ID         int64     `orm:"ID" json:"ID"`
 	CREATETIME time.Time `orm:"CREATE_TIME" json:"CREATE_TIME"`
 	UPDATETIME time.Time `orm:"UPDATE_TIME" json:"UPDATE_TIME"`
-	BLOCKNUM   int64     `orm:"BLOCK_NUM" json:"BLOCK_NUM"`
+	BLOCKNUM   *big.Int  `orm:"BLOCK_NUM" json:"BLOCK_NUM"`
 	BLOCKHASH  string    `orm:"BLOCK_HASH" json:"BLOCK_HASH"`
 	BLOCKSIZE  string    `orm:"BLOCK_SIZE" json:"BLOCK_SIZE"`
 }
@@ -40,15 +43,15 @@ type HEADER struct {
 	ROOT        string    `orm:"ROOT" json:"ROOT"`
 	TXHASH      string    `orm:"TXHASH" json:"TXHASH"`
 	RECEIPTHASH string    `orm:"RECEIPTHASH" json:"RECEIPTHASH"`
-	BLOOM       string    `orm:"BLOOM" json:"BLOOM"`
-	DIFFICULTY  int64     `orm:"DIFFICULTY" json:"DIFFICULTY"`
-	BLOCKNUMBER int64     `orm:"BLOCK_NUMBER" json:"BLOCK_NUMBER"`
-	GASLIMIT    string    `orm:"GAS_LIMIT" json:"GAS_LIMIT"`
-	GASUSED     string    `orm:"GAS_USED" json:"GAS_USED"`
-	TIME        string    `orm:"TIME" json:"TIME"`
+	BLOOM       *big.Int  `orm:"BLOOM" json:"BLOOM"`
+	DIFFICULTY  *big.Int  `orm:"DIFFICULTY" json:"DIFFICULTY"`
+	BLOCKNUMBER *big.Int  `orm:"BLOCK_NUMBER" json:"BLOCK_NUMBER"`
+	GASLIMIT    uint64    `orm:"GAS_LIMIT" json:"GAS_LIMIT"`
+	GASUSED     uint64    `orm:"GAS_USED" json:"GAS_USED"`
+	TIME        uint64    `orm:"TIME" json:"TIME"`
 	EXTRA       string    `orm:"EXTRA" json:"EXTRA"`
-	NONCE       string    `orm:"NONCE" json:"NONCE"`
-	BASEFEE     string    `orm:"BASEFEE" json:"BASEFEE"`
+	NONCE       uint64    `orm:"NONCE" json:"NONCE"`
+	BASEFEE     *big.Int  `orm:"BASEFEE" json:"BASEFEE"`
 }
 
 func (HEADER) TableName() string {

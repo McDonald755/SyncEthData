@@ -5,6 +5,8 @@ import (
 	"SyncEthData/utils"
 	"context"
 	"fmt"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 	log "github.com/sirupsen/logrus"
 	"math/big"
@@ -17,8 +19,6 @@ func getBlockInfo(num *big.Int) {
 		if err != nil {
 			log.Error(err)
 		}
-		fmt.Println(block)
-
 		utils.TransformData(block)
 	}
 
@@ -49,5 +49,9 @@ func GetBlockByNum(client *ethclient.Client, num *big.Int) * types.Block{
 }
 
 func GetBlockHeight(client *ethclient.Client) int{
-	return 0
+	number, err := client.BlockNumber(context.Background())
+	if err != nil {
+		fmt.Println(err)
+	}
+	return int(number)
 }

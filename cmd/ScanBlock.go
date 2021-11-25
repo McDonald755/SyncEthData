@@ -4,6 +4,7 @@ import (
 	"SyncEthData/config"
 	"SyncEthData/syncData"
 	"SyncEthData/utils"
+	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/spf13/cobra"
 	"math/big"
 )
@@ -25,7 +26,7 @@ func ScanCmd() *cobra.Command {
 }
 
 func scanBlock() {
-	height := syncData.GetBlockHeight(config.CLIENT[0])//补充一下获取区块高度的代码
+	height := syncData.GetBlockHeight(config.CLIENT[0])
 	distance := height/len(config.CLIENT)
 
 	for i:=0;i<len(config.CLIENT)-1;i++ {

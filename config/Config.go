@@ -69,7 +69,7 @@ func initDB() *gorm.DB {
 
 func initClient() []*ethclient.Client {
 	var clients []*ethclient.Client
-	for i := 1; i < 10; i++ {
+	for i := 1; i < 3; i++ {
 		url := APPVIPER.GetString("infura.url" + strconv.Itoa(i))
 		client, err := ethclient.Dial(url)
 		if err != nil {

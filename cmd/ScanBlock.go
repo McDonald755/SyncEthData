@@ -7,6 +7,7 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/spf13/cobra"
 	"math/big"
+	"sync"
 	"time"
 )
 
@@ -18,7 +19,7 @@ func ScanCmd() *cobra.Command {
 		Long:  "It will sync the latest block ",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			//syncData.SaveAllData(blockNum
-			scanBlock(blockNum)
+			ScanBlock(blockNum)
 			return nil
 		},
 	}
@@ -26,18 +27,20 @@ func ScanCmd() *cobra.Command {
 	return scanCmd
 }
 
-func scanBlock(blockNum int) {
+func ScanBlock(blockNum int) {
 	height := syncData.GetBlockHeight(config.CLIENT[0])
 	distance := (height-blockNum)/len(config.CLIENT)
-
+	wg := sync.WaitGroup{}
 	for i:=0;i<len(config.CLIENT)-1;i++ {
-		go getBlock(config.CLIENT[i],i,distance, blockNum)
+		wg.Add(1)
+		go getBlock(config.CLIENT[i],i,distance, blockNum,&wg)
 	}
-
-	go scanNewBlock(config.CLIENT[len(config.CLIENT)-1],(len(config.CLIENT)-1)*distance+blockNum)
+	wg.Add(1)
+	go scanNewBlock(config.CLIENT[len(config.CLIENT)-1],(len(config.CLIENT)-1)*distance+blockNum,&wg)
+	wg.Wait()
 }
 
-func getBlock(client *ethclient.Client, i int, distance int,blockNum int) {
+func getBlock(client *ethclient.Client, i int, distance int,blockNum int,wg *sync.WaitGroup) {
 	from := distance*i + blockNum
 	end := from + distance
 	for from<end {
@@ -50,9 +53,10 @@ func getBlock(client *ethclient.Client, i int, distance int,blockNum int) {
 		}
 
 	}
+	wg.Done()
 }
 //同步最新区块
-func scanNewBlock(client *ethclient.Client, from int)  {
+func scanNewBlock(client *ethclient.Client, from int,wg *sync.WaitGroup)  {
 	for true {
 		block, err := syncData.GetBlockByNum(client, big.NewInt(int64(from)))
 		if err != nil {
@@ -63,4 +67,5 @@ func scanNewBlock(client *ethclient.Client, from int)  {
 		}
 
 	}
+	wg.Done()
 }

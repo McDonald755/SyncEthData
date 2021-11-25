@@ -8,4 +8,5 @@ database:
   charset: utf8mb4
   loc: Asia/Shanghai
 infura:
-  url1: "wss://mainnet.infura.io/ws/v3/54e3e280077643268755a4a9a98c75cb"
+  url1: "wss://mainnet.infura.io/ws/v3/44542aa175d44232b84dc9f5f24f4b93"
+  url2: "wss://mainnet.infura.io/ws/v3/0d923f6954514d97a5dd7d3b1d817f98"

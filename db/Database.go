@@ -3,31 +3,22 @@ package db
 import (
 	"SyncEthData/config"
 	log "github.com/sirupsen/logrus"
+	"gorm.io/gorm"
 )
 
-func SaveBlock(block BLOCK) error {
-	res := config.DB.Save(block)
-	if res.Error != nil {
-		log.Error(res.Error)
-		return res.Error
+func SaveData(block *BLOCK, header *HEADER, trx *[]TRANSACTION) {
+	dbErr := gorm.DB{}
+	tx := config.DB.Begin()
+	dbErr = *tx.Create(block)
+	dbErr = *tx.Create(header)
+	if len(*trx) > 0 {
+		dbErr = *tx.Create(trx)
 	}
-	return nil
-}
 
-func SaveHeader(header HEADER) error {
-	res := config.DB.Save(header)
-	if res.Error != nil {
-		log.Error(res.Error)
-		return res.Error
+	if dbErr.Error != nil {
+		log.Error(dbErr.Error)
+		tx.Rollback()
+	} else {
+		tx.Commit()
 	}
-	return nil
-}
-
-func SaveTrx(trx TRANSACTION) error {
-	res := config.DB.Save(trx)
-	if res.Error != nil {
-		log.Error(res.Error)
-		return res.Error
-	}
-	return nil
 }

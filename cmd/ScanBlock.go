@@ -7,6 +7,7 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/spf13/cobra"
 	"math/big"
+	"sync"
 	"time"
 )
 

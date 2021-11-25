@@ -17,7 +17,6 @@ func ScanCmd() *cobra.Command {
 		Short: "s",
 		Long:  "It will sync the latest block ",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			//syncData.SaveAllData(blockNum
 			scanBlock(blockNum)
 			return nil
 		},
@@ -28,36 +27,37 @@ func ScanCmd() *cobra.Command {
 
 func scanBlock(blockNum int) {
 	height := syncData.GetBlockHeight(config.CLIENT[0])
-	distance := (height-blockNum)/len(config.CLIENT)
+	distance := (height - blockNum) / len(config.CLIENT)
 
-	for i:=0;i<len(config.CLIENT)-1;i++ {
-		go getBlock(config.CLIENT[i],i,distance, blockNum)
+	for i := 0; i < len(config.CLIENT)-1; i++ {
+		go getBlock(config.CLIENT[i], i, distance, blockNum)
 	}
 
-	go scanNewBlock(config.CLIENT[len(config.CLIENT)-1],(len(config.CLIENT)-1)*distance+blockNum)
+	go scanNewBlock(config.CLIENT[len(config.CLIENT)-1], (len(config.CLIENT)-1)*distance+blockNum)
 }
 
-func getBlock(client *ethclient.Client, i int, distance int,blockNum int) {
+func getBlock(client *ethclient.Client, i int, distance int, blockNum int) {
 	from := distance*i + blockNum
 	end := from + distance
-	for from<end {
+	for from < end {
 		block, err := syncData.GetBlockByNum(client, big.NewInt(int64(from)))
 		if err != nil {
 			time.Sleep(time.Hour)
-		}else {
+		} else {
 			utils.TransformData(block)
 			from += 1
 		}
 
 	}
 }
+
 //同步最新区块
-func scanNewBlock(client *ethclient.Client, from int)  {
+func scanNewBlock(client *ethclient.Client, from int) {
 	for true {
 		block, err := syncData.GetBlockByNum(client, big.NewInt(int64(from)))
 		if err != nil {
 			time.Sleep(time.Hour)
-		}else {
+		} else {
 			utils.TransformData(block)
 			from += 1
 		}

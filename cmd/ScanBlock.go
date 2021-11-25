@@ -7,7 +7,6 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/spf13/cobra"
 	"math/big"
-	"sync"
 	"time"
 )
 
@@ -18,8 +17,7 @@ func ScanCmd() *cobra.Command {
 		Short: "s",
 		Long:  "It will sync the latest block ",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			//syncData.SaveAllData(blockNum
-			ScanBlock(blockNum)
+			scanBlock(blockNum)
 			return nil
 		},
 	}
@@ -27,7 +25,7 @@ func ScanCmd() *cobra.Command {
 	return scanCmd
 }
 
-func ScanBlock(blockNum int) {
+func scanBlock(blockNum int) {
 	height := syncData.GetBlockHeight(config.CLIENT[0])
 	distance := (height-blockNum)/len(config.CLIENT)
 	wg := sync.WaitGroup{}

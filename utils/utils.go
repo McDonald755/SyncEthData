@@ -42,13 +42,13 @@ func transferHeader(header *types.Header) *db.HEADER {
 		ROOT:        header.Root.Hex(),
 		TXHASH:      header.TxHash.Hex(),
 		RECEIPTHASH: header.ReceiptHash.Hex(),
-		BLOOM:       header.Bloom.Big().Int64(),
+		//BLOOM:       header.Bloom.Big().String(),
 		DIFFICULTY:  header.Difficulty.Int64(),
 		BLOCKNUMBER: header.Number.Int64(),
 		GASLIMIT:    header.GasLimit,
 		GASUSED:     header.GasUsed,
 		TIME:        header.Time,
-		EXTRA:       string(header.Extra),
+		EXTRA:       header.Extra,
 		NONCE:       strconv.Itoa(int(header.Nonce.Uint64())),
 		BASEFEE:     baseFee.Int64(),
 		CREATETIME:  time.Now(),
@@ -65,7 +65,7 @@ func transferTrx(trx *types.Transaction, num *big.Int) *db.TRANSACTION {
 		return nil
 	}
 	result := db.TRANSACTION{
-		TXDATA:      string(trx.Data()),
+		TXDATA:      trx.Data(),
 		HASH:        trx.Hash().Hex(),
 		SIZE:        trx.Size().String(),
 		FROMACCOUNT: msg.From().Hex(),

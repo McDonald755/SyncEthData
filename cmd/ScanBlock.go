@@ -30,14 +30,14 @@ func scanBlock(blockNum int) {
 	distance := (height-blockNum)/len(config.CLIENT)
 
 	for i:=0;i<len(config.CLIENT)-1;i++ {
-		go getBlock(config.CLIENT[i],i,distance)
+		go getBlock(config.CLIENT[i],i,distance, blockNum)
 	}
 
-	go scanNewBlock(config.CLIENT[len(config.CLIENT)-1],(len(config.CLIENT)-1)*distance)
+	go scanNewBlock(config.CLIENT[len(config.CLIENT)-1],(len(config.CLIENT)-1)*distance+blockNum)
 }
 
-func getBlock(client *ethclient.Client, i int, distance int) {
-	from := distance*i
+func getBlock(client *ethclient.Client, i int, distance int,blockNum int) {
+	from := distance*i + blockNum
 	end := from + distance
 	for from<end {
 		block := syncData.GetBlockByNum(client, big.NewInt(int64(from)))

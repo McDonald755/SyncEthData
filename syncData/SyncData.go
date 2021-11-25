@@ -40,12 +40,12 @@ func GetHeadByHash(client *ethclient.Client, h string) {
 	fmt.Printf("%#v \n", hash)
 }
 
-func GetBlockByNum(client *ethclient.Client, num *big.Int) *types.Block {
+func GetBlockByNum(client *ethclient.Client, num *big.Int) (*types.Block, error) {
 	block, err := client.BlockByNumber(context.Background(), num)
 	if err != nil {
 		fmt.Println(err)
 	}
-	return block
+	return block, err
 }
 
 func GetBlockHeight(client *ethclient.Client) int{

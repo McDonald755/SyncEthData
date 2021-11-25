@@ -7,6 +7,7 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/spf13/cobra"
 	"math/big"
+	"time"
 )
 
 func ScanCmd() *cobra.Command {
@@ -40,16 +41,26 @@ func getBlock(client *ethclient.Client, i int, distance int,blockNum int) {
 	from := distance*i + blockNum
 	end := from + distance
 	for from<end {
-		block := syncData.GetBlockByNum(client, big.NewInt(int64(from)))
-		utils.TransformData(block)
-		from += 1
+		block, err := syncData.GetBlockByNum(client, big.NewInt(int64(from)))
+		if err != nil {
+			time.Sleep(time.Hour)
+		}else {
+			utils.TransformData(block)
+			from += 1
+		}
+
 	}
 }
 //同步最新区块
 func scanNewBlock(client *ethclient.Client, from int)  {
 	for true {
-		block := syncData.GetBlockByNum(client, big.NewInt(int64(from)))
-		utils.TransformData(block)
-		from += 1
+		block, err := syncData.GetBlockByNum(client, big.NewInt(int64(from)))
+		if err != nil {
+			time.Sleep(time.Hour)
+		}else {
+			utils.TransformData(block)
+			from += 1
+		}
+
 	}
 }

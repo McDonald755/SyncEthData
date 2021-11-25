@@ -13,11 +13,11 @@ func ScanCmd() *cobra.Command {
 	var blockNum int
 	scanCmd := &cobra.Command{
 		Use:   "scan",
-		Short: "scan block",
+		Short: "s",
 		Long:  "It will sync the latest block ",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			//syncData.SaveAllData(blockNum
-			scanBlock()
+			scanBlock(blockNum)
 			return nil
 		},
 	}
@@ -25,9 +25,9 @@ func ScanCmd() *cobra.Command {
 	return scanCmd
 }
 
-func scanBlock() {
+func scanBlock(blockNum int) {
 	height := syncData.GetBlockHeight(config.CLIENT[0])
-	distance := height/len(config.CLIENT)
+	distance := (height-blockNum)/len(config.CLIENT)
 
 	for i:=0;i<len(config.CLIENT)-1;i++ {
 		go getBlock(config.CLIENT[i],i,distance)

@@ -2,6 +2,7 @@ package utils
 
 import (
 	"SyncEthData/db"
+	"encoding/hex"
 	"github.com/ethereum/go-ethereum/core/types"
 	log "github.com/sirupsen/logrus"
 	"math/big"
@@ -48,7 +49,7 @@ func transferHeader(header *types.Header) *db.HEADER {
 		GASLIMIT:    header.GasLimit,
 		GASUSED:     header.GasUsed,
 		TIME:        header.Time,
-		EXTRA:       header.Extra,
+		EXTRA:       hex.Dump(header.Extra),
 		NONCE:       strconv.Itoa(int(header.Nonce.Uint64())),
 		BASEFEE:     baseFee.Int64(),
 		CREATETIME:  time.Now(),
@@ -65,7 +66,7 @@ func transferTrx(trx *types.Transaction, num *big.Int) *db.TRANSACTION {
 		return nil
 	}
 	result := db.TRANSACTION{
-		TXDATA:      trx.Data(),
+		TXDATA:      "0x" + hex.EncodeToString(trx.Data()),
 		HASH:        trx.Hash().Hex(),
 		SIZE:        trx.Size().String(),
 		FROMACCOUNT: msg.From().Hex(),

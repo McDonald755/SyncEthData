@@ -8,7 +8,7 @@ type TRANSACTION struct {
 	ID          int64     `gorm:"primaryKey;column:ID" json:"ID"`
 	CREATETIME  time.Time `gorm:"column:CREATE_TIME;default:null" json:"CREATE_TIME"`
 	UPDATETIME  time.Time `gorm:"column:UPDATE_TIME;default:null" json:"UPDATE_TIME"`
-	TXDATA      []byte    `gorm:"column:TX_DATA" json:"TX_DATA"`
+	TXDATA      string    `gorm:"column:TX_DATA" json:"TX_DATA"`
 	HASH        string    `gorm:"column:HASH" json:"HASH"`
 	SIZE        string    `gorm:"column:SIZE" json:"SIZE"`
 	FROMACCOUNT string    `gorm:"column:FROM_ACCOUNT" json:"FROM_ACCOUNT"`
@@ -48,7 +48,7 @@ type HEADER struct {
 	GASLIMIT    uint64 `gorm:"column:GAS_LIMIT" json:"GAS_LIMIT"`
 	GASUSED     uint64 `gorm:"column:GAS_USED" json:"GAS_USED"`
 	TIME        uint64 `gorm:"column:TIME" json:"TIME"`
-	EXTRA       []byte `gorm:"column:EXTRA" json:"EXTRA"`
+	EXTRA       string `gorm:"column:EXTRA" json:"EXTRA"`
 	NONCE       string `gorm:"column:NONCE" json:"NONCE"`
 	BASEFEE     int64  `gorm:"column:BASEFEE" json:"BASEFEE"`
 }

@@ -65,11 +65,24 @@ func transferTrx(trx *types.Transaction, num *big.Int) *db.TRANSACTION {
 		log.Error(err)
 		return nil
 	}
+	var (
+		toAccount, value string
+	)
+	if trx.To() != nil {
+		toAccount = trx.To().Hex()
+	}
+
+	if trx.Value() != nil {
+		value = trx.Value().String()
+	}
 	result := db.TRANSACTION{
 		TXDATA:      "0x" + hex.EncodeToString(trx.Data()),
 		HASH:        trx.Hash().Hex(),
 		SIZE:        trx.Size().String(),
 		FROMACCOUNT: msg.From().Hex(),
+		TOACCOUNT:   toAccount,
+		VALUE:       value,
+		TXNTYPE:     int64(trx.Type()),
 		BLOCKNUMBER: num.Int64(),
 		CREATETIME:  time.Now(),
 		UPDATETIME:  time.Now(),

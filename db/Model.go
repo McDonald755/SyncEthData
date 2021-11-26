@@ -12,6 +12,9 @@ type TRANSACTION struct {
 	HASH        string    `gorm:"column:HASH" json:"HASH"`
 	SIZE        string    `gorm:"column:SIZE" json:"SIZE"`
 	FROMACCOUNT string    `gorm:"column:FROM_ACCOUNT" json:"FROM_ACCOUNT"`
+	TOACCOUNT   string    `gorm:"column:TO_ACCOUNT" json:"TO_ACCOUNT"`
+	TXNTYPE     int64     `gorm:"column:TXNTYPE" json:"TXNTYPE"`
+	VALUE       string    `gorm:"column:VALUE" json:"VALUE"`
 	BLOCKNUMBER int64     `gorm:"column:BLOCK_NUMBER" json:"BLOCK_NUMBER"`
 }
 

@@ -62,7 +62,7 @@ func transferHeader(header *types.Header) *db.HEADER {
 func transferTrx(trx *types.Transaction, num *big.Int) *db.TRANSACTION {
 	msg, err := trx.AsMessage(types.NewLondonSigner(trx.ChainId()), nil)
 	if err != nil {
-		log.Error(err)
+		log.Error("Get trx message Error TRX hash is:", trx.Hash().Hex(), err)
 		return nil
 	}
 	var (

@@ -1,11 +1,14 @@
 package syncData
 
 import (
+	"SyncEthData/config"
+	"SyncEthData/utils"
 	"context"
 	"fmt"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
+	log "github.com/sirupsen/logrus"
 	"math/big"
 )
 
@@ -24,7 +27,7 @@ import (
 func GetHeadByNum(client *ethclient.Client, num *big.Int) *types.Header {
 	header, err := client.HeaderByNumber(context.Background(), num)
 	if err != nil {
-		fmt.Println(err)
+		log.Error(err)
 	}
 	return header
 }
@@ -32,7 +35,7 @@ func GetHeadByNum(client *ethclient.Client, num *big.Int) *types.Header {
 func GetHeadByHash(client *ethclient.Client, h string) {
 	hash, err := client.HeaderByHash(context.Background(), common.HexToHash(h))
 	if err != nil {
-		fmt.Println(err)
+		log.Error(err)
 	}
 	fmt.Printf("%#v \n", hash)
 }
@@ -40,15 +43,15 @@ func GetHeadByHash(client *ethclient.Client, h string) {
 func GetBlockByNum(client *ethclient.Client, num *big.Int) (*types.Block, error) {
 	block, err := client.BlockByNumber(context.Background(), num)
 	if err != nil {
-		fmt.Println(err)
+		log.Error("Get Block Num Error:", err)
 	}
 	return block, err
 }
 
-func GetBlockHeight(client *ethclient.Client) int{
+func GetBlockHeight(client *ethclient.Client) int {
 	number, err := client.BlockNumber(context.Background())
 	if err != nil {
-		fmt.Println(err)
+		log.Error("Get Block Height Error:", err)
 	}
 	return int(number)
 }

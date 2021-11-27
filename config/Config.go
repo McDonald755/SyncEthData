@@ -73,7 +73,7 @@ func initClient() []*ethclient.Client {
 		url := APPVIPER.GetString("infura.url" + strconv.Itoa(i))
 		client, err := ethclient.Dial(url)
 		if err != nil {
-			log.Error(err)
+			log.Error("client faild:", err)
 		} else {
 			fmt.Println("client success")
 		}

@@ -5,17 +5,17 @@ import (
 )
 
 type TRANSACTION struct {
-	ID          int64     `gorm:"primaryKey;column:ID" json:"ID"`
-	CREATETIME  time.Time `gorm:"column:CREATE_TIME;default:null" json:"CREATE_TIME"`
-	UPDATETIME  time.Time `gorm:"column:UPDATE_TIME;default:null" json:"UPDATE_TIME"`
-	TXDATA      string    `gorm:"column:TX_DATA" json:"TX_DATA"`
-	HASH        string    `gorm:"column:HASH" json:"HASH"`
-	SIZE        string    `gorm:"column:SIZE" json:"SIZE"`
-	FROMACCOUNT string    `gorm:"column:FROM_ACCOUNT" json:"FROM_ACCOUNT"`
-	TOACCOUNT   string    `gorm:"column:TO_ACCOUNT" json:"TO_ACCOUNT"`
-	TXNTYPE     int64     `gorm:"column:TXNTYPE" json:"TXNTYPE"`
-	VALUE       string    `gorm:"column:VALUE" json:"VALUE"`
-	BLOCKNUMBER int64     `gorm:"column:BLOCK_NUMBER" json:"BLOCK_NUMBER"`
+	ID         int64     `gorm:"primaryKey;column:ID" json:"ID"`
+	CREATETIME time.Time `gorm:"column:CREATE_TIME;default:null" json:"CREATE_TIME"`
+	UPDATETIME time.Time `gorm:"column:UPDATE_TIME;default:null" json:"UPDATE_TIME"`
+	TXDATA     string    `gorm:"column:TX_DATA" json:"TX_DATA"`
+	HASH       string    `gorm:"column:HASH" json:"HASH"`
+	SIZE       string    `gorm:"column:SIZE" json:"SIZE"`
+	//FROMACCOUNT string    `gorm:"column:FROM_ACCOUNT" json:"FROM_ACCOUNT"`
+	TOACCOUNT   string `gorm:"column:TO_ACCOUNT" json:"TO_ACCOUNT"`
+	TXNTYPE     int64  `gorm:"column:TXNTYPE" json:"TXNTYPE"`
+	VALUE       string `gorm:"column:VALUE" json:"VALUE"`
+	BLOCKNUMBER int64  `gorm:"column:BLOCK_NUMBER" json:"BLOCK_NUMBER"`
 }
 
 func (TRANSACTION) TableName() string {

@@ -2,7 +2,6 @@ package db
 
 import (
 	"SyncEthData/config"
-	"fmt"
 	log "github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )
@@ -21,7 +20,7 @@ func SaveData(block *BLOCK, header *HEADER, trx *[]TRANSACTION) {
 		log.Error("----------------------Error Num is:", block.BLOCKNUM)
 		tx.Rollback()
 	} else {
-		fmt.Println("save:", block.BLOCKNUM)
+		//fmt.Println("save:", block.BLOCKNUM)
 		tx.Commit()
 	}
 }

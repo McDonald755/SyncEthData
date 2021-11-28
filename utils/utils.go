@@ -4,14 +4,12 @@ import (
 	"SyncEthData/db"
 	"encoding/hex"
 	"github.com/ethereum/go-ethereum/core/types"
-	log "github.com/sirupsen/logrus"
 	"math/big"
 	"strconv"
 	"time"
 )
 
 func TransformData(block *types.Block) {
-
 	if block == nil {
 		return
 	}
@@ -60,11 +58,11 @@ func transferHeader(header *types.Header) *db.HEADER {
 }
 
 func transferTrx(trx *types.Transaction, num *big.Int) *db.TRANSACTION {
-	msg, err := trx.AsMessage(types.NewLondonSigner(trx.ChainId()), nil)
-	if err != nil {
-		log.Error("Get trx message Error TRX hash is:", trx.Hash().Hex(), err)
-		return nil
-	}
+	//msg, err := trx.AsMessage(types.NewLondonSigner(trx.ChainId()), nil)
+	//if err != nil {
+	//	log.Error("Get trx message Error TRX hash is:", trx.Hash().Hex(), err)
+	//	return nil
+	//}
 	var (
 		toAccount, value string
 	)
@@ -76,10 +74,10 @@ func transferTrx(trx *types.Transaction, num *big.Int) *db.TRANSACTION {
 		value = trx.Value().String()
 	}
 	result := db.TRANSACTION{
-		TXDATA:      "0x" + hex.EncodeToString(trx.Data()),
-		HASH:        trx.Hash().Hex(),
-		SIZE:        trx.Size().String(),
-		FROMACCOUNT: msg.From().Hex(),
+		TXDATA: "0x" + hex.EncodeToString(trx.Data()),
+		HASH:   trx.Hash().Hex(),
+		SIZE:   trx.Size().String(),
+		//FROMACCOUNT: msg.From().Hex(),
 		TOACCOUNT:   toAccount,
 		VALUE:       value,
 		TXNTYPE:     int64(trx.Type()),

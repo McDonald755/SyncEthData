@@ -62,22 +62,23 @@ func initDB() *gorm.DB {
 	if err != nil {
 		panic("connected error" + err.Error())
 	} else {
-		fmt.Println("connected db")
+		log.Infoln("connect db success")
 	}
 	return db
 }
 
 func initClient() []*ethclient.Client {
 	var clients []*ethclient.Client
-	for i := 1; i < 3; i++ {
+	for i := 1; i < 102; i++ {
 		url := APPVIPER.GetString("infura.url" + strconv.Itoa(i))
 		client, err := ethclient.Dial(url)
 		if err != nil {
-			log.Error("client faild:", err)
+			log.Error("client faild:", i, err)
 		} else {
-			fmt.Println("client success")
+			clients = append(clients, client)
 		}
-		clients = append(clients, client)
+
 	}
+	log.Infoln("connect client success")
 	return clients
 }

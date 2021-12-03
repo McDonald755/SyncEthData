@@ -17,7 +17,7 @@ func SaveData(block *BLOCK, header *HEADER, trx *[]TRANSACTION) {
 
 	if dbErr.Error != nil {
 		log.Error(dbErr.Error)
-		log.Error("----------------------Error Num is:", block.BLOCKNUM)
+		log.Error("----------------------Error Num is:", block.BlockNum)
 		tx.Rollback()
 	} else {
 		//fmt.Println("save:", block.BLOCKNUM)

@@ -1,8 +1,6 @@
 package syncData
 
 import (
-	"SyncEthData/config"
-	"SyncEthData/utils"
 	"context"
 	"fmt"
 	"github.com/ethereum/go-ethereum/common"

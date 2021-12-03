@@ -6,16 +6,16 @@ import (
 
 type TRANSACTION struct {
 	ID         int64     `gorm:"primaryKey;column:ID" json:"ID"`
-	CREATETIME time.Time `gorm:"column:CREATE_TIME;default:null" json:"CREATE_TIME"`
-	UPDATETIME time.Time `gorm:"column:UPDATE_TIME;default:null" json:"UPDATE_TIME"`
-	TXDATA     string    `gorm:"column:TX_DATA" json:"TX_DATA"`
-	HASH       string    `gorm:"column:HASH" json:"HASH"`
-	SIZE       string    `gorm:"column:SIZE" json:"SIZE"`
+	CreateTime time.Time `gorm:"column:create_time;default:null" json:"CREATE_TIME"`
+	UpdateTime time.Time `gorm:"column:update_time;default:null" json:"UPDATE_TIME"`
+	TxData     string    `gorm:"column:tx_data" json:"TX_DATA"`
+	Hash       string    `gorm:"column:hash" json:"HASH"`
+	Size       string    `gorm:"column:size" json:"SIZE"`
 	//FROMACCOUNT string    `gorm:"column:FROM_ACCOUNT" json:"FROM_ACCOUNT"`
-	TOACCOUNT   string `gorm:"column:TO_ACCOUNT" json:"TO_ACCOUNT"`
-	TXNTYPE     int64  `gorm:"column:TXNTYPE" json:"TXNTYPE"`
-	VALUE       string `gorm:"column:VALUE" json:"VALUE"`
-	BLOCKNUMBER int64  `gorm:"column:BLOCK_NUMBER" json:"BLOCK_NUMBER"`
+	ToAccount   string `gorm:"column:to_account" json:"TO_ACCOUNT"`
+	TxnType     int64  `gorm:"column:txn_type" json:"TXNTYPE"`
+	Value       string `gorm:"column:value" json:"VALUE"`
+	BlockNumber int64  `gorm:"column:block_number" json:"BLOCK_NUMBER"`
 }
 
 func (TRANSACTION) TableName() string {
@@ -24,11 +24,11 @@ func (TRANSACTION) TableName() string {
 
 type BLOCK struct {
 	ID         int64     `gorm:"primaryKey;column:ID" json:"ID"`
-	CREATETIME time.Time `gorm:"column:CREATE_TIME;default:null" json:"CREATE_TIME"`
-	UPDATETIME time.Time `gorm:"column:UPDATE_TIME;default:null" json:"UPDATE_TIME"`
-	BLOCKNUM   int64     `gorm:"column:BLOCK_NUM" json:"BLOCK_NUM"`
-	BLOCKHASH  string    `gorm:"column:BLOCK_HASH" json:"BLOCK_HASH"`
-	BLOCKSIZE  string    `gorm:"column:BLOCK_SIZE" json:"BLOCK_SIZE"`
+	CreateTime time.Time `gorm:"column:create_time;default:null" json:"CREATE_TIME"`
+	UpdateTime time.Time `gorm:"column:update_time;default:null" json:"UPDATE_TIME"`
+	BlockNum   int64     `gorm:"column:block_num" json:"BLOCK_NUM"`
+	BlockHash  string    `gorm:"column:block_hash" json:"BLOCK_HASH"`
+	BlockSize  string    `gorm:"column:block_size" json:"BLOCK_SIZE"`
 }
 
 func (BLOCK) TableName() string {
@@ -37,23 +37,23 @@ func (BLOCK) TableName() string {
 
 type HEADER struct {
 	ID          int64     `gorm:"primaryKey;column:ID" json:"ID"`
-	CREATETIME  time.Time `gorm:"column:CREATE_TIME;default:null" json:"CREATE_TIME"`
-	UPDATETIME  time.Time `gorm:"column:UPDATE_TIME;default:null" json:"UPDATE_TIME"`
-	PARENTHASH  string    `gorm:"column:PARENT_HASH" json:"PARENT_HASH"`
-	UNCLEHASH   string    `gorm:"column:UNCLE_HASH" json:"UNCLE_HASH"`
-	COINBASE    string    `gorm:"column:COIN_BASE" json:"COIN_BASE"`
-	ROOT        string    `gorm:"column:ROOT" json:"ROOT"`
-	TXHASH      string    `gorm:"column:TX_HASH" json:"TXHASH"`
-	RECEIPTHASH string    `gorm:"column:RECEIPT_HASH" json:"RECEIPTHASH"`
+	CreateTime  time.Time `gorm:"column:create_time;default:null" json:"CREATE_TIME"`
+	UpdateTime  time.Time `gorm:"column:update_time;default:null" json:"UPDATE_TIME"`
+	ParentHash  string    `gorm:"column:parent_hash" json:"PARENT_HASH"`
+	UncleHash   string    `gorm:"column:uncle_hash" json:"UNCLE_HASH"`
+	CoinHase    string    `gorm:"column:coin_base" json:"COIN_BASE"`
+	Root        string    `gorm:"column:root" json:"ROOT"`
+	TxHash      string    `gorm:"column:tx_hash" json:"TXHASH"`
+	ReceiptHash string    `gorm:"column:receipt_hash" json:"RECEIPTHASH"`
 	//BLOOM       string     `gorm:"column:BLOOM" json:"BLOOM"`
-	DIFFICULTY  int64  `gorm:"column:DIFFICULTY" json:"DIFFICULTY"`
-	BLOCKNUMBER int64  `gorm:"column:BLOCK_NUMBER" json:"BLOCK_NUMBER"`
-	GASLIMIT    uint64 `gorm:"column:GAS_LIMIT" json:"GAS_LIMIT"`
-	GASUSED     uint64 `gorm:"column:GAS_USED" json:"GAS_USED"`
-	TIME        uint64 `gorm:"column:TIME" json:"TIME"`
-	EXTRA       string `gorm:"column:EXTRA" json:"EXTRA"`
-	NONCE       string `gorm:"column:NONCE" json:"NONCE"`
-	BASEFEE     int64  `gorm:"column:BASEFEE" json:"BASEFEE"`
+	Difficulty  int64  `gorm:"column:difficulty" json:"DIFFICULTY"`
+	BlockNumber int64  `gorm:"column:block_number" json:"BLOCK_NUMBER"`
+	GasLimit    uint64 `gorm:"column:gas_limit" json:"GAS_LIMIT"`
+	GasUsed     uint64 `gorm:"column:gas_used" json:"GAS_USED"`
+	Time        uint64 `gorm:"column:time" json:"TIME"`
+	Extra       string `gorm:"column:extra" json:"EXTRA"`
+	Nonce       string `gorm:"column:nonce" json:"NONCE"`
+	Basefee     int64  `gorm:"column:basefee" json:"BASEFEE"`
 }
 
 func (HEADER) TableName() string {

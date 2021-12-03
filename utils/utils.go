@@ -35,23 +35,23 @@ func transferHeader(header *types.Header) *db.HEADER {
 		baseFee = header.BaseFee
 	}
 	result := db.HEADER{
-		PARENTHASH:  header.ParentHash.Hex(),
-		UNCLEHASH:   header.UncleHash.Hex(),
-		COINBASE:    header.Coinbase.Hex(),
-		ROOT:        header.Root.Hex(),
-		TXHASH:      header.TxHash.Hex(),
-		RECEIPTHASH: header.ReceiptHash.Hex(),
+		ParentHash:  header.ParentHash.Hex(),
+		UncleHash:   header.UncleHash.Hex(),
+		CoinHase:    header.Coinbase.Hex(),
+		Root:        header.Root.Hex(),
+		TxHash:      header.TxHash.Hex(),
+		ReceiptHash: header.ReceiptHash.Hex(),
 		//BLOOM:       header.Bloom.Big().String(),
-		DIFFICULTY:  header.Difficulty.Int64(),
-		BLOCKNUMBER: header.Number.Int64(),
-		GASLIMIT:    header.GasLimit,
-		GASUSED:     header.GasUsed,
-		TIME:        header.Time,
-		EXTRA:       hex.Dump(header.Extra),
-		NONCE:       strconv.Itoa(int(header.Nonce.Uint64())),
-		BASEFEE:     baseFee.Int64(),
-		CREATETIME:  time.Now(),
-		UPDATETIME:  time.Now(),
+		Difficulty:  header.Difficulty.Int64(),
+		BlockNumber: header.Number.Int64(),
+		GasLimit:    header.GasLimit,
+		GasUsed:     header.GasUsed,
+		Time:        header.Time,
+		Extra:       hex.Dump(header.Extra),
+		Nonce:       strconv.Itoa(int(header.Nonce.Uint64())),
+		Basefee:     baseFee.Int64(),
+		CreateTime:  time.Now(),
+		UpdateTime:  time.Now(),
 	}
 
 	return &result
@@ -74,27 +74,27 @@ func transferTrx(trx *types.Transaction, num *big.Int) *db.TRANSACTION {
 		value = trx.Value().String()
 	}
 	result := db.TRANSACTION{
-		TXDATA: "0x" + hex.EncodeToString(trx.Data()),
-		HASH:   trx.Hash().Hex(),
-		SIZE:   trx.Size().String(),
+		TxData: "0x" + hex.EncodeToString(trx.Data()),
+		Hash:   trx.Hash().Hex(),
+		Size:   trx.Size().String(),
 		//FROMACCOUNT: msg.From().Hex(),
-		TOACCOUNT:   toAccount,
-		VALUE:       value,
-		TXNTYPE:     int64(trx.Type()),
-		BLOCKNUMBER: num.Int64(),
-		CREATETIME:  time.Now(),
-		UPDATETIME:  time.Now(),
+		ToAccount:   toAccount,
+		Value:       value,
+		TxnType:     int64(trx.Type()),
+		BlockNumber: num.Int64(),
+		CreateTime:  time.Now(),
+		UpdateTime:  time.Now(),
 	}
 	return &result
 }
 
 func transferBlock(block *types.Block) *db.BLOCK {
 	result := db.BLOCK{
-		BLOCKNUM:   block.Number().Int64(),
-		BLOCKHASH:  block.Hash().Hex(),
-		BLOCKSIZE:  block.Size().String(),
-		CREATETIME: time.Now(),
-		UPDATETIME: time.Now(),
+		BlockNum:   block.Number().Int64(),
+		BlockHash:  block.Hash().Hex(),
+		BlockSize:  block.Size().String(),
+		CreateTime: time.Now(),
+		UpdateTime: time.Now(),
 	}
 	return &result
 }

@@ -4,7 +4,9 @@ import (
 	"SyncEthData/config"
 	"SyncEthData/syncData"
 	"SyncEthData/utils"
+	"context"
 	"github.com/ethereum/go-ethereum/ethclient"
+	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"math/big"
 	"sync"
@@ -54,16 +56,22 @@ func getBlock(client *ethclient.Client, i int, distance int, blockNum int, wg *s
 	wg.Done()
 }
 
-//同步最新区块
 func scanNewBlock(client *ethclient.Client, from int, wg *sync.WaitGroup) {
 	for true {
-		block, err := syncData.GetBlockByNum(client, big.NewInt(int64(from)))
+		number, err := client.BlockNumber(context.Background())
 		if err != nil {
-			time.Sleep(time.Hour)
-		} else {
-			utils.TransformData(block)
-			from += 1
+			log.Error(err)
 		}
+		for from < int(number) {
+			block, err := syncData.GetBlockByNum(client, big.NewInt(int64(from)))
+			if err != nil {
+				time.Sleep(time.Hour)
+			} else {
+				utils.TransformData(block)
+				from += 1
+			}
+		}
+		time.Sleep(time.Second)
 	}
 	wg.Done()
 }

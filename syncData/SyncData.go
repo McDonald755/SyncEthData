@@ -1,8 +1,12 @@
 package syncData
 
 import (
+	"SyncEthData/db"
+	"SyncEthData/utils"
 	"context"
 	"fmt"
+	"github.com/ethereum/go-ethereum"
+	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -52,4 +56,34 @@ func GetBlockHeight(client *ethclient.Client) int {
 		log.Error("Get Block Height Error:", err)
 	}
 	return int(number)
+}
+
+func ScanLog(client *ethclient.Client, contractABI abi.ABI, addr map[string]byte) {
+	var (
+		from  *big.Int
+		addrs []string
+	)
+
+	for k, _ := range addr {
+		addrs = append(addrs, k)
+	}
+	accounts := utils.TransferAccounts(&addrs)
+	query := ethereum.FilterQuery{
+		Topics: [][]common.Hash{
+			{contractABI.Events["Transfer"].ID},
+		},
+		FromBlock: from,
+		ToBlock:   from,
+		Addresses: *accounts,
+	}
+
+	filterLogs, err := client.FilterLogs(context.Background(), query)
+	if err != nil {
+		log.Error("Get log error:", err)
+	}
+
+	for _, l := range filterLogs {
+		data := utils.TransferNftData(l)
+		db.SaveOrUpdateNftData(data)
+	}
 }

@@ -59,3 +59,42 @@ type HEADER struct {
 func (HEADER) TableName() string {
 	return "HEADER"
 }
+
+/**
+
+ */
+type NFT_DATA struct {
+	ID          int64     `gorm:"ID" json:"ID"`
+	CreatedTime time.Time `gorm:"created_time" json:"created_time"`
+	UpdatedTime time.Time `gorm:"updated_time" json:"updated_time"`
+	TokenId     int64     `gorm:"token_id" json:"token_id"`
+	TokenUri    string    `gorm:"token_uri" json:"token_uri"`
+	TokenSymbol string    `gorm:"token_symbol" json:"token_symbol"`
+	TokenName   string    `gorm:"token_name" json:"token_name"`
+	Owner       string    `gorm:"owner" json:"owner"`
+	OracleAdd   string    `gorm:"oracle_add" json:"oracle_add"`
+}
+
+func (NFT_DATA) TableName() string {
+	return "NFT_DATA"
+}
+
+type ORACLE_DATA struct {
+	ID          int64     `gorm:"ID" json:"ID"`
+	CreatedTime time.Time `gorm:"created_time" json:"created_time"`
+	UpdatedTime time.Time `gorm:"updated_time" json:"updated_time"`
+	Address     string    `gorm:"address" json:"address"`
+	TokenSymbol string    `gorm:"token_symbol" json:"token_symbol"`
+	TokenName   string    `gorm:"token_name" json:"token_name"`
+}
+
+func (ORACLE_DATA) TableName() string {
+	return "ORACLE_DATA"
+}
+
+type ResultVo struct {
+	ID          int64
+	ToAccount   string
+	TxData      []byte
+	BlockNumber int
+}

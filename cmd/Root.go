@@ -15,6 +15,7 @@ var rootCmd = &cobra.Command{
 func Execute() {
 	rootCmd.AddCommand(
 		ScanCmd(),
+		SyncCmd(),
 	)
 
 	if err := rootCmd.Execute(); err != nil {
